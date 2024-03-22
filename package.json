@@ -1,25 +1,22 @@
 {
-  "name": "dsp.js",
-  "version": "1.0.0",
-  "description": "Digital Signal Processing for Javascript",
-  "main": "dsp.js",
-  "directories": {
-    "example": "examples",
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/corbanbrook/dsp.js.git"
-  },
-  "keywords": [
-    "dsp",
-    "dft",
-    "fft"
-  ],
-  "author": "Corban Brook",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/corbanbrook/dsp.js/issues"
-  },
-  "homepage": "https://github.com/corbanbrook/dsp.js#readme"
+	"name": "dsp.js",
+	"version": "1.0.0",
+	"description": "Digital Signal Processing for Javascript",
+	"main": "dsp.js",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://opensource.chee.party/chee/dsp.js.git"
+	},
+	"keywords": [
+		"dsp",
+		"dft",
+		"fft"
+	],
+	"author": "Corban Brook",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/chee/dsp.js/issues"
+	},
+	"homepage": "https://github.com/chee/dsp.js#readme"
 }
