@@ -1,69 +1,48 @@
-# DSP.js
+# @chee/dsp
 
-**NOTE: This project is no longer maintained (and hasnt been for years). I wrote this when I was much younger and experimenting in Audio and DSP. This is no longer much of a passion of mine.**
-
-DSP.js is a digital signal processing library for javascript. 
-It includes many functions for signal analysis and generation, including 
-Oscillators (sine, saw, square, triangle), Window functions (Hann, Hamming, etc), 
-Envelopes (ADSR), IIR Filters (lowpass, highpass, bandpass, notch), FFT and DFT 
-transforms, Delays, Reverb.
+@chee/dsp is a digital signal processing library for javascript. It functions for
+signal analysis and generation, including Window functions (Hann, Hamming, etc)
+and FFT and DFT transforms.
 
 ## Modules
 
-* `DFT(bufferSize, sampleRate)`: Discrete Fourier Transform
-  * Usage: 
+- `DFT(bufferSize, sampleRate)`: Discrete Fourier Transform
+
+  - Usage:
     ```js
-    var dft = new DFT(1024, 44100);
-    dft.forward(signal);
-    var spectrum = dft.spectrum;
+    import DFT from "@chee/dsp/dft.js"
+    let dft = new DFT(1024, 44100)
+    dft.forward(signal)
+    let spectrum = dft.spectrum
     ```
 
-* `FFT(bufferSize, sampleRate)`: Fast Fourier Transform
-  * Usage:
+- `FFT(bufferSize, sampleRate)`: Fast Fourier Transform
+
+  - Usage:
     ```js
-    var fft = new FFT(2048, 44100);
-    fft.forward(signal);
-    var spectrum = fft.spectrum;
+    import FFT from "@chee/dsp/fft.js"
+    let fft = new FFT(2048, 44100)
+    fft.forward(signal)
+    let spectrum = fft.spectrum
     ```
 
-* `Oscillator(waveform, frequency, amplitude, bufferSize, sampleRate)`: Signal Generator
-  * Sine wave
-  * Square wave
-  * Saw wave
-  * Triangle wave
-  * Usage:
-    ```js
-    var osc = new Oscillator(SINEWAVE, 440, 1, 2048, 22050);
-    osc.generate();
-    var signal = osc.signal;
-    ```
+Copyright (c) 2010 Corban Brook
 
-* `ADSR(attack, decay, sustainLevel, sustain, release, sampleRate)`: Attack-Decay-Sustain-Release Envelope
-  * Usage:
-    ```js
-    var envelope = new ADSR(0.01, 0.1, 0.5, 0.1, 0.2, 44100);
-    envelope.process(signal);
-    ```
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-* `IIRFilter(filter, cutoff, sampleRate)`: Infinite Impulse Response Filters
-  * Low Pass Filter
-  * High Pass Filter
-  * Usage:
-    ```js
-    var filter = IIRFilter(LOWPASS, 200, 44100);
-    filter.process(signal);
-    ```
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-* `MultiDelay(maxDelayInSamplesSize, delayInSamples, masterVolume, delayVolume)`: Delay which feeds back its own delayed signal	
-  * Usage:
-    ```js
-    var delay = MultiDelay(44100*5, 44100*1, 1.0, 0.6);
-    delay.process(signal);  
-    ```
-
-* `Reverb(maxDelayInSamplesSize, delayInSamples, masterVolume, mixVolume, delayVolume, dampFrequency)`: Reverb
-  * Usage:
-    ```js
-    var reverb = Reverb(20000, 6500, 0.8, 0.5, 0.9, 4500);
-    reverb.process(signal);
-    ```
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

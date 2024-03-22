@@ -1,5 +1,5 @@
 {
-	"name": "dsp.js",
+	"name": "@chee/dsp",
 	"version": "1.0.0",
 	"description": "Digital Signal Processing for Javascript",
 	"main": "dsp.js",
