@@ -1,7 +1,7 @@
 {
 	"private": false,
 	"name": "@chee/dsp",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Digital Signal Processing for Javascript",
 	"main": "dsp.js",
 	"type": "module",
