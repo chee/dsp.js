@@ -6,6 +6,8 @@
  *
  */
 
+import {TWO_PI} from "./constants.js"
+
 /**
  * Inverts the phase of a signal
  * @param {Float32Array} buffer A sample buffer
@@ -119,11 +121,11 @@ export function mixSampleBuffers(
 export function rms(buffer) {
 	let total = 0
 
-	for (let i = 0, n = buffer.length; i < n; i++) {
+	for (let i = 0; i < buffer.length; i++) {
 		total += buffer[i] * buffer[i]
 	}
 
-	return Math.sqrt(total / n)
+	return Math.sqrt(total / buffer.length)
 }
 
 /**
@@ -166,7 +168,7 @@ export function mag2db(buffer) {
 	return result
 }
 
-/*
+/**
  *  Frequency response
  *
  *  Created by Ricard Marxer <email@ricardmarxer.com> on 2010-05-23.
@@ -174,9 +176,9 @@ export function mag2db(buffer) {
  *
  *  Calculates the frequency response at the given points.
  *
- *  @b b coefficients of the filter
- *  @a a coefficients of the filter
- *  @w w points (normally between -PI and PI) where to calculate the frequency response
+ *  @param {Float32Array} b coefficients of the filter
+ *  @param {Float32Array} a coefficients of the filter
+ *  @param {Float32Array} w points (normally between -PI and PI) where to calculate the frequency response
  *
  *  @returns the frequency response in magnitude
  *
@@ -187,7 +189,7 @@ export function freqz(b, a, w) {
 	if (!w) {
 		w = new Float32Array(200)
 		for (i = 0; i < w.length; i++) {
-			w[i] = (DSP.TWO_PI / w.length) * i - Math.PI
+			w[i] = (TWO_PI / w.length) * i - Math.PI
 		}
 	}
 
