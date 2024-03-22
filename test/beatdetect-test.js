@@ -1,30 +1,30 @@
-load('audio-harness.js');
-load('dsp.js');
-load('beatdetektor.js');
+import * as test from "./audio-harness.js"
+import * as dsp from "../dsp.js"
+import BeatDetektor from "./beatdetektor.js"
 
-var iterations = 1000;
+let iterations = 1000
 
-var fft = fft = new FFT(frameBufferLength / channels, rate);
-var bd = new BeatDetektor();
-var kick_det = new BeatDetektor.modules.vis.BassKick();
-var vu = new BeatDetektor.modules.vis.VU();
+let fft = new dsp.FFT(test.frameBufferLength / test.channels, test.rate)
+let bd = new BeatDetektor()
+let kick_det = new BeatDetektor.modules.vis.BassKick()
+let vu = new BeatDetektor.modules.vis.VU()
 
-var m_BeatTimer = 0;
-var m_BeatCounter = 0;
-var ftimer = 0;
+// var m_BeatTimer = 0
+// var m_BeatCounter = 0
+// var ftimer = 0
 
-var calcBeat = function() {
-  var fb     = getFramebuffer(),
-      signal = DSP.getChannel(DSP.MIX, fb);
+var calcBeat = function () {
+	let fb = test.getFramebuffer()
+	let signal = dsp.getMono(fb)
 
-  fft.forward(signal);
+	fft.forward(signal)
 
-  var timestamp = (new Date()).getTime();
-  bd.process(timestamp, fft.spectrum);
+	var timestamp = new Date().getTime()
+	bd.process(timestamp, fft.spectrum)
 
-  // Bass Kick detection
-  kick_det.process(bd);
-  vu.process(bd);
-};
+	// Bass Kick detection
+	kick_det.process(bd)
+	vu.process(bd)
+}
 
-runTest(calcBeat, iterations);
+test.runTest(calcBeat, iterations)

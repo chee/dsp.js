@@ -1,14 +1,14 @@
-load('audio-harness.js');
-load('dsp.js');
+import * as test from "./audio-harness.js"
+import * as dsp from "../dsp.js"
 
-var iterations = 100;
-var dft = new DFT(frameBufferLength / channels, rate);
+var iterations = 100
+var dft = new dsp.DFT(test.frameBufferLength / test.channels, test.rate)
 
-var calcDFT = function() {
-  var fb     = getFramebuffer(),
-      signal = DSP.getChannel(DSP.MIX, fb);
+var calcDFT = function () {
+	var fb = test.getFramebuffer(),
+		signal = dsp.getMono(fb)
 
-  dft.forward(signal);
-};
+	dft.forward(signal)
+}
 
-runTest(calcDFT, iterations);
+test.runTest(calcDFT, iterations)
