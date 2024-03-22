@@ -27,8 +27,8 @@ export default class FFT extends FourierTransform {
 			bit = bit >> 1
 		}
 
-		this.sinTable = new Float64Array(bufferSize)
-		this.cosTable = new Float64Array(bufferSize)
+		this.sinTable = new Float32Array(bufferSize)
+		this.cosTable = new Float32Array(bufferSize)
 
 		for (i = 0; i < bufferSize; i++) {
 			this.sinTable[i] = Math.sin(-Math.PI / i)
@@ -40,7 +40,7 @@ export default class FFT extends FourierTransform {
 	 * Performs a forward transform on the sample buffer.
 	 * Converts a time domain signal to frequency domain spectra.
 	 *
-	 * @param {import("./dsp").DSPBuffer} buffer The sample buffer. Buffer Length must be power of 2
+	 * @param {Float32Array} buffer The sample buffer. Buffer Length must be power of 2
 	 *
 	 * @returns The frequency spectrum array
 	 */
@@ -154,8 +154,8 @@ export default class FFT extends FourierTransform {
 			imag[i] *= -1
 		}
 
-		var revReal = new Float64Array(bufferSize)
-		var revImag = new Float64Array(bufferSize)
+		var revReal = new Float32Array(bufferSize)
+		var revImag = new Float32Array(bufferSize)
 
 		for (i = 0; i < real.length; i++) {
 			revReal[i] = real[reverseTable[i]]
@@ -203,7 +203,7 @@ export default class FFT extends FourierTransform {
 			halfSize = halfSize << 1
 		}
 
-		var buffer = new Float64Array(bufferSize) // this should be reused instead
+		var buffer = new Float32Array(bufferSize) // this should be reused instead
 		for (i = 0; i < bufferSize; i++) {
 			buffer[i] = real[i] / bufferSize
 		}

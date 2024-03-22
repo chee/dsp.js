@@ -11,9 +11,9 @@ export default class FourierTransform {
 		this.sampleRate = sampleRate
 		this.bandwidth = ((2 / bufferSize) * sampleRate) / 2
 
-		this.spectrum = new Float64Array(bufferSize / 2)
-		this.real = new Float64Array(bufferSize)
-		this.imag = new Float64Array(bufferSize)
+		this.spectrum = new Float32Array(bufferSize / 2)
+		this.real = new Float32Array(bufferSize)
+		this.imag = new Float32Array(bufferSize)
 	}
 
 	/**
@@ -27,6 +27,7 @@ export default class FourierTransform {
 		return this.bandwidth * index + this.bandwidth / 2
 	}
 
+	/** */
 	calculateSpectrum() {
 		var spectrum = this.spectrum,
 			real = this.real,
@@ -49,5 +50,7 @@ export default class FourierTransform {
 
 			spectrum[i] = mag
 		}
+
+		return this.spectrum
 	}
 }

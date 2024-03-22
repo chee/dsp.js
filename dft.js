@@ -15,8 +15,8 @@ export default class DFT extends FourierTransform {
 		let N = (bufferSize / 2) * bufferSize
 		let TWO_PI = 2 * Math.PI
 
-		this.sinTable = new Float64Array(N)
-		this.cosTable = new Float64Array(N)
+		this.sinTable = new Float32Array(N)
+		this.cosTable = new Float32Array(N)
 
 		for (let i = 0; i < N; i++) {
 			this.sinTable[i] = Math.sin((i * TWO_PI) / bufferSize)
@@ -28,9 +28,9 @@ export default class DFT extends FourierTransform {
 	 * Performs a forward transform on the sample buffer.
 	 * Converts a time domain signal to frequency domain spectra.
 	 *
-	 * @param {import("./dsp.js").DSPBuffer} buffer The sample buffer
+	 * @param {Float32Array} buffer The sample buffer
 	 *
-	 * @returns The frequency spectrum array
+	 * @returns {Float32Array} The frequency spectrum array
 	 */
 	forward(buffer) {
 		let real = this.real,

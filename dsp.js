@@ -7,22 +7,12 @@
  */
 
 /**
- * @typedef {ArrayLike<number>} DSPBuffer
- */
-
-////////////////////////////////////////////////////////////////////////////////
-//                            DSP UTILITY FUNCTIONS                           //
-////////////////////////////////////////////////////////////////////////////////
-
-/**
  * Inverts the phase of a signal
- * @template {DSPBuffer} T
- * @param {T} buffer A sample buffer
- *
- * @returns {T} The inverted sample buffer
+ * @param {Float32Array} buffer A sample buffer
+ * @returns {Float32Array} The inverted sample buffer
  */
 export function invert(buffer) {
-	for (var i = 0, len = buffer.length; i < len; i++) {
+	for (let i = 0, len = buffer.length; i < len; i++) {
 		buffer[i] *= -1
 	}
 
@@ -32,19 +22,19 @@ export function invert(buffer) {
 /**
  * Converts split-stereo (dual mono) sample buffers into a stereo interleaved sample buffer
  *
- * @param {DSPBuffer} left  A sample buffer
- * @param {DSPBuffer} right A sample buffer
+ * @param {Float32Array} left  A sample buffer
+ * @param {Float32Array} right A sample buffer
  *
- * @returns {Float64Array} The stereo interleaved buffer
+ * @returns {Float32Array} The stereo interleaved buffer
  */
 export function interleave(left, right) {
 	if (left.length !== right.length) {
 		throw "Can not interleave. Channel lengths differ."
 	}
 
-	var stereoInterleaved = new Float64Array(left.length * 2)
+	let stereoInterleaved = new Float32Array(left.length * 2)
 
-	for (var i = 0, len = left.length; i < len; i++) {
+	for (let i = 0, len = left.length; i < len; i++) {
 		stereoInterleaved[2 * i] = left[i]
 		stereoInterleaved[2 * i + 1] = right[i]
 	}
@@ -55,13 +45,13 @@ export function interleave(left, right) {
 /**
  * Separates a channel from a stereo-interleaved sample buffer
  *
- * @param {DSPBuffer}  buffer A stereo-interleaved sample buffer
+ * @param {Float32Array}  buffer A stereo-interleaved sample buffer
  *
- * @returns {Float64Array} an Array containing a signal mono sample buffer
+ * @returns {Float32Array} an Array containing a signal mono sample buffer
  */
 export function getLeftChannel(buffer) {
-	let left = new Float64Array(buffer.length / 2)
-	for (var i = 0, len = buffer.length / 2; i < len; i++) {
+	let left = new Float32Array(buffer.length / 2)
+	for (let i = 0, len = buffer.length / 2; i < len; i++) {
 		left[i] = buffer[2 * i]
 	}
 	return left
@@ -70,13 +60,13 @@ export function getLeftChannel(buffer) {
 /**
  * Separates a channel from a stereo-interleaved sample buffer
  *
- * @param {DSPBuffer}  buffer A stereo-interleaved sample buffer
+ * @param {Float32Array}  buffer A stereo-interleaved sample buffer
  *
- * @returns {Float64Array} an Array containing a signal mono sample buffer
+ * @returns {Float32Array} an Array containing a signal mono sample buffer
  */
 export function getRightChannel(buffer) {
-	let right = new Float64Array(buffer.length / 2)
-	for (var i = 0, len = buffer.length / 2; i < len; i++) {
+	let right = new Float32Array(buffer.length / 2)
+	for (let i = 0, len = buffer.length / 2; i < len; i++) {
 		right[i] = buffer[2 * i + 1]
 	}
 	return right
@@ -85,13 +75,13 @@ export function getRightChannel(buffer) {
 /**
  * Separates a channel from a stereo-interleaved sample buffer
  *
- * @param {DSPBuffer}  buffer A stereo-interleaved sample buffer
+ * @param {Float32Array}  buffer A stereo-interleaved sample buffer
  *
- * @returns {Float64Array} an Array containing a signal mono sample buffer
+ * @returns {Float32Array} an Array containing a signal mono sample buffer
  */
 export function getMono(buffer) {
-	let mono = new Float64Array(buffer.length / 2)
-	for (var i = 0, len = buffer.length / 2; i < len; i++) {
+	let mono = new Float32Array(buffer.length / 2)
+	for (let i = 0, len = buffer.length / 2; i < len; i++) {
 		mono[i] = (buffer[2 * i] + buffer[2 * i + 1]) / 2
 	}
 	return mono
@@ -102,12 +92,12 @@ export function getMono(buffer) {
  * to negate the second buffer while mixing and to perform a volume correction
  * on the final signal.
  *
- * @param {Array} sampleBuffer1 Array containing Float values or a Float64Array
- * @param {Array} sampleBuffer2 Array containing Float values or a Float64Array
+ * @param {Float32Array} sampleBuffer1 samples
+ * @param {Float32Array} sampleBuffer2 samples
  * @param {Boolean} negate When true inverts/flips the audio signal
  * @param {Number} volumeCorrection When you add multiple sample buffers, use this to tame your signal ;)
  *
- * @returns A new Float64Array interleaved buffer.
+ * @returns A new Float32Array interleaved buffer.
  */
 export function mixSampleBuffers(
 	sampleBuffer1,
@@ -115,9 +105,9 @@ export function mixSampleBuffers(
 	negate,
 	volumeCorrection
 ) {
-	var outputSamples = new Float64Array(sampleBuffer1)
+	let outputSamples = new Float32Array(sampleBuffer1)
 
-	for (var i = 0; i < sampleBuffer1.length; i++) {
+	for (let i = 0; i < sampleBuffer1.length; i++) {
 		outputSamples[i] +=
 			(negate ? -sampleBuffer2[i] : sampleBuffer2[i]) / volumeCorrection
 	}
@@ -125,7 +115,7 @@ export function mixSampleBuffers(
 	return outputSamples
 }
 
-/** @param {DSPBuffer} buffer */
+/** @param {Float32Array} buffer */
 export function rms(buffer) {
 	let total = 0
 
@@ -138,7 +128,7 @@ export function rms(buffer) {
 
 /**
  * Find Peak of signal
- * @param {DSPBuffer} buffer
+ * @param {Float32Array} buffer
  */
 export function peak(buffer) {
 	let peak = 0
@@ -156,9 +146,9 @@ export function peak(buffer) {
  *  Created by Ricard Marxer <email@ricardmarxer.com> on 2010-05-23.
  *  Copyright 2010 Ricard Marxer. All rights reserved.
  *
- *  @param {DSPBuffer} buffer array of magnitudes to convert to decibels
+ *  @param {Float32Array} buffer array of magnitudes to convert to decibels
  *
- *  @returns the array in decibels
+ *  @returns {Float32Array} the array in decibels
  *
  */
 export function mag2db(buffer) {
@@ -168,7 +158,7 @@ export function mag2db(buffer) {
 	let log = Math.log
 	let max = Math.max
 
-	let result = Float64Array(buffer.length)
+	let result = new Float32Array(buffer.length)
 	for (let i = 0; i < buffer.length; i++) {
 		result[i] = 20.0 * log(max(buffer[i], minMag))
 	}
@@ -192,29 +182,29 @@ export function mag2db(buffer) {
  *
  */
 export function freqz(b, a, w) {
-	var i, j
+	let i, j
 
 	if (!w) {
-		w = Float64Array(200)
+		w = new Float32Array(200)
 		for (i = 0; i < w.length; i++) {
 			w[i] = (DSP.TWO_PI / w.length) * i - Math.PI
 		}
 	}
 
-	var result = Float64Array(w.length)
+	let result = new Float32Array(w.length)
 
-	var sqrt = Math.sqrt
-	var cos = Math.cos
-	var sin = Math.sin
+	let sqrt = Math.sqrt
+	let cos = Math.cos
+	let sin = Math.sin
 
 	for (i = 0; i < w.length; i++) {
-		var numerator = {real: 0.0, imag: 0.0}
+		let numerator = {real: 0.0, imag: 0.0}
 		for (j = 0; j < b.length; j++) {
 			numerator.real += b[j] * cos(-j * w[i])
 			numerator.imag += b[j] * sin(-j * w[i])
 		}
 
-		var denominator = {real: 0.0, imag: 0.0}
+		let denominator = {real: 0.0, imag: 0.0}
 		for (j = 0; j < a.length; j++) {
 			denominator.real += a[j] * cos(-j * w[i])
 			denominator.imag += a[j] * sin(-j * w[i])
